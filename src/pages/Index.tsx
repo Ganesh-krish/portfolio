@@ -12,6 +12,7 @@ import { Achievements } from "@/components/Achievements";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Preloader } from "@/components/Preloader";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
@@ -19,17 +20,27 @@ const Index = () => {
   return (
     <ThemeProvider defaultTheme="light">
       <div className="min-h-screen flex flex-col">
+        {/* Skip to main content — keyboard accessibility */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+
+        <ScrollProgress />
         <Preloader />
         <Header />
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Education />
-        <Certificates />
-        <Achievements />
-        <Contact />
+
+        <main id="main-content">
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <Skills />
+          <Education />
+          <Certificates />
+          <Achievements />
+          <Contact />
+        </main>
+
         <Footer />
         <ScrollToTop />
         <WhatsAppIcon />

@@ -1,120 +1,126 @@
 
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { Download, Menu } from "lucide-react";
-import { useState } from "react";
+import { Download, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
-interface NavItemProps {
-  href: string;
-  label: string;
-  onClick: () => void;
-}
-
-function NavItem({ href, label, onClick }: NavItemProps) {
-  return (
-    <li>
-      <a
-        href={href}
-        onClick={onClick}
-        className="text-foreground/80 hover:text-primary transition-colors px-4 py-2 rounded-md"
-      >
-        {label}
-      </a>
-    </li>
-  );
-}
+const navItems = [
+  { href: "#about",        label: "About" },
+  { href: "#experience",   label: "Experience" },
+  { href: "#projects",     label: "Projects" },
+  { href: "#skills",       label: "Skills" },
+  { href: "#education",    label: "Education" },
+  { href: "#certificates", label: "Certificates" },
+  { href: "#contact",      label: "Contact" },
+];
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen]       = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-  
-  const handleDownloadResume = () => {
-    window.open("https://drive.google.com/file/d/137AkA3UMimqLFz0HuTo-LtRytha5-N6u/view?usp=drivesdk", "_blank");
-  };
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
-  const navItems = [
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#skills", label: "Skills" },
-    { href: "#education", label: "Education" },
-    { href: "#certificates", label: "Certificates" },
-    { href: "#contact", label: "Contact" },
-  ];
+  const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-lg bg-background/80 border-b">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <a href="#" className="text-xl md:text-2xl font-bold text-primary">
-            GK<span className="text-foreground"></span>
-          </a>
-        </div>
-        
-        <nav className="hidden md:flex">
-          <ul className="flex space-x-1 items-center">
-            {navItems.map((item) => (
-              <NavItem
-                key={item.label}
-                href={item.href}
-                label={item.label}
-                onClick={closeMenu}
-              />
-            ))}
-            <li className="ml-2">
-              <Button 
-                size="sm" 
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-primary hover:from-blue-600 hover:to-primary/90 transition-all duration-300 shadow-md hover:shadow-lg"
-                onClick={handleDownloadResume}
-              >
-                <Download size={16} className="animate-bounce-subtle" /> Resume
-              </Button>
-            </li>
-            <li className="ml-1">
-              <ThemeToggle />
-            </li>
-          </ul>
+    <header
+      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-slate-900/5"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="container flex h-16 items-center justify-between px-4 md:px-8">
+
+        {/* Logo */}
+        <a href="#" aria-label="K Ganesh Krishna — home" className="flex items-center gap-3 group">
+          <div
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+            style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)" }}
+          >
+            GK
+          </div>
+          <div className="hidden sm:block">
+            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 font-display">
+              Ganesh Krishna
+            </span>
+            <span className="font-mono-code text-[10px] text-slate-400 dark:text-slate-500 ml-1.5">
+              .backend
+            </span>
+          </div>
+        </a>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="relative px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
-        
-        {/* Mobile menu button */}
+
+        {/* Actions */}
+        <div className="hidden md:flex items-center gap-2">
+          <Button
+            size="sm"
+            onClick={() => window.open("https://drive.google.com/file/d/137AkA3UMimqLFz0HuTo-LtRytha5-N6u/view?usp=drivesdk", "_blank")}
+            className="gap-2 text-xs font-semibold h-8 px-3"
+            style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", color: "#fff", border: "none" }}
+            aria-label="Download resume (opens in new tab)"
+          >
+            <Download size={12} /> Resume
+          </Button>
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile */}
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            className="h-9 w-9"
           >
-            <Menu />
+            {open ? <X size={18} /> : <Menu size={18} />}
           </Button>
         </div>
-        
-        {/* Mobile dropdown menu */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 p-4 bg-background/95 backdrop-blur-lg border-b animate-fade-in">
-            <ul className="flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <NavItem
-                  key={item.label}
-                  href={item.href}
-                  label={item.label}
-                  onClick={closeMenu}
-                />
-              ))}
-              <li className="pt-2">
-                <Button 
-                  className="w-full flex items-center gap-2 justify-center bg-gradient-to-r from-blue-500 to-primary hover:from-blue-600 hover:to-primary/90 transition-all duration-300 shadow-md hover:shadow-lg"
-                  onClick={handleDownloadResume}
-                >
-                  <Download size={16} className="animate-bounce-subtle" /> Resume
-                </Button>
-              </li>
-            </ul>
-          </div>
-        )}
       </div>
+
+      {/* Mobile drawer */}
+      {open && (
+        <div className="md:hidden absolute top-16 inset-x-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-4 py-4 animate-fade-in">
+          <nav className="flex flex-col gap-1">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={close}
+                className="px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
+            <Button
+              className="mt-3 w-full gap-2"
+              onClick={() => { window.open("https://drive.google.com/file/d/137AkA3UMimqLFz0HuTo-LtRytha5-N6u/view?usp=drivesdk", "_blank"); close(); }}
+              style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", color: "#fff", border: "none" }}
+            >
+              <Download size={14} /> Download Resume
+            </Button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
