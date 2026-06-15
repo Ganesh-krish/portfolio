@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Github, Linkedin, Mail, Download, ArrowRight, Terminal, RefreshCw, Wrench, Server } from "lucide-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useScrollY } from "@/hooks/useParallax";
+import { BentoProjectCards } from "./BentoProjectCards";
 
 const slogans = [
   "Googled it. Broke it. Fixed it. Shipped it.",
@@ -67,206 +68,7 @@ function PhraseCard({ top, bot, color, Icon, spin }: {
   );
 }
 
-/* ── Tech badges with brand logos ── */
-const techBadges = [
-  { name: "PHP",         logo: "https://cdn.simpleicons.org/php/777BB4",        color: "#777BB4", x: "-20%", y: "4%",  delay: "0s",   anim: "animate-float" },
-  { name: "MySQL",       logo: "https://cdn.simpleicons.org/mysql/4479A1",       color: "#4479A1", x: "100%", y: "4%",  delay: "1s",   anim: "animate-float-alt" },
-  { name: "React",       logo: "https://cdn.simpleicons.org/react/61DAFB",       color: "#61DAFB", x: "-22%", y: "24%", delay: "0.3s", anim: "animate-float-alt" },
-  { name: "Git",         logo: "https://cdn.simpleicons.org/git/F05032",         color: "#F05032", x: "101%", y: "24%", delay: "1.3s", anim: "animate-float" },
-  { name: "CodeIgniter", logo: "https://cdn.simpleicons.org/codeigniter/DD4814", color: "#DD4814", x: "-24%", y: "46%", delay: "0.5s", anim: "animate-float-alt" },
-  { name: "Firebase",    logo: "https://cdn.simpleicons.org/firebase/FF6D00",    color: "#FF6D00", x: "102%", y: "46%", delay: "1.5s", anim: "animate-float" },
-  { name: "Docker",      logo: "https://cdn.simpleicons.org/docker/2496ED",      color: "#2496ED", x: "-23%", y: "67%", delay: "0.6s", anim: "animate-float" },
-  { name: "Vue.js",      logo: "https://cdn.simpleicons.org/vuedotjs/4FC08D",    color: "#4FC08D", x: "101%", y: "67%", delay: "2s",   anim: "animate-float-alt" },
-  { name: "Razorpay",    logo: "https://cdn.simpleicons.org/razorpay/2563EB",    color: "#2563EB", x: "-18%", y: "87%", delay: "0.8s", anim: "animate-float" },
-  { name: "Postman",     logo: "https://cdn.simpleicons.org/postman/FF6C37",     color: "#FF6C37", x: "100%", y: "87%", delay: "1.8s", anim: "animate-float-alt" },
-];
 
-/* ── Code syntax token helpers ── */
-type Tok = { t: string; c?: string };
-type Line = Tok[];
-
-const codeLines: Line[] = [
-  [{ t: "<?php", c: "code-cmt" }],
-  [],
-  [{ t: "/**", c: "code-cmt" }],
-  [{ t: ' * "Most freshers have projects.', c: "code-cmt" }],
-  [{ t: ' *  I have products."', c: "code-cmt" }],
-  [{ t: " */", c: "code-cmt" }],
-  [],
-  [
-    { t: "class ", c: "code-kw" },
-    { t: "GaneshKrishna ", c: "code-cls" },
-    { t: "extends ", c: "code-kw" },
-    { t: "BackendDev", c: "code-cls" },
-    { t: " {" },
-  ],
-  [],
-  [
-    { t: "  " }, { t: "protected ", c: "code-kw" },
-    { t: "$stack", c: "code-var" }, { t: " = " },
-    { t: "'PHP · CI3 · MySQL'", c: "code-str" }, { t: ";" },
-  ],
-  [
-    { t: "  " }, { t: "protected ", c: "code-kw" },
-    { t: "$products", c: "code-var" }, { t: " = " },
-    { t: "5", c: "code-num" }, { t: "; " },
-    { t: "// live in production", c: "code-cmt" },
-  ],
-  [],
-  [
-    { t: "  " }, { t: "public function ", c: "code-kw" },
-    { t: "philosophy", c: "code-fn" }, { t: "(): " },
-    { t: "string", c: "code-kw" }, { t: " {" },
-  ],
-  [
-    { t: "    " }, { t: "return ", c: "code-kw" },
-    { t: "'Ship real products, not tutorials.'", c: "code-str" }, { t: ";" },
-  ],
-  [{ t: "  }" }],
-  [],
-  [
-    { t: "  " }, { t: "public function ", c: "code-kw" },
-    { t: "daily", c: "code-fn" }, { t: "(): " },
-    { t: "never", c: "code-kw" }, { t: " {" },
-  ],
-  [
-    { t: "    " }, { t: "while", c: "code-kw" },
-    { t: "(" }, { t: "true", c: "code-num" }, { t: ") {" },
-  ],
-  [
-    { t: "      " }, { t: "$this", c: "code-var" },
-    { t: "->" }, { t: "code", c: "code-fn" },
-    { t: "()   " }, { t: "// write it", c: "code-cmt" },
-  ],
-  [
-    { t: "           ->" }, { t: "debug", c: "code-fn" },
-    { t: "()  " }, { t: "// break it", c: "code-cmt" },
-  ],
-  [
-    { t: "           ->" }, { t: "ship", c: "code-fn" },
-    { t: "();   " }, { t: "// deploy it", c: "code-cmt" },
-  ],
-  [{ t: "    }" }],
-  [{ t: "  }" }],
-  [{ t: "}" }],
-];
-
-function CodeQuote() {
-  const [visible,  setVisible]  = useState(0);
-  const [cursorOn, setCursorOn] = useState(true);
-
-  // cursor blink
-  useEffect(() => {
-    const id = setInterval(() => setCursorOn(c => !c), 530);
-    return () => clearInterval(id);
-  }, []);
-
-  // type each line progressively — empty lines appear faster
-  useEffect(() => {
-    if (visible >= codeLines.length) return;
-    const delay = codeLines[visible].length === 0 ? 55 : 108;
-    const t = setTimeout(() => setVisible(v => v + 1), delay);
-    return () => clearTimeout(t);
-  }, [visible]);
-
-  const typing = visible < codeLines.length;
-
-  return (
-    <div
-      className="terminal-card w-full select-none"
-      aria-hidden="true"
-      style={{ maxWidth: 500 }}
-    >
-      {/* ── Title bar ── */}
-      <div className="terminal-chrome" style={{ justifyContent: "flex-start" }}>
-        <div className="terminal-dot" style={{ background: "#FF5F56" }} />
-        <div className="terminal-dot" style={{ background: "#FFBD2E" }} />
-        <div className="terminal-dot" style={{ background: "#27C93F" }} />
-        <span className="terminal-filename" style={{ marginLeft: 10 }}>GaneshKrishna.php</span>
-        <span style={{ marginLeft: "auto", fontSize: 9, color: "#475569", fontFamily: "JetBrains Mono,monospace" }}>PHP 8.2</span>
-      </div>
-
-      {/* ── Tab bar ── */}
-      <div style={{ background: "#1e1e1e", borderBottom: "1px solid #252526", display: "flex", alignItems: "stretch", padding: "0 8px", height: 30 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0 12px", background: "#1e1e1e", borderTop: "1.5px solid #2563EB", fontSize: 10.5, color: "#cccccc", fontFamily: "JetBrains Mono,monospace" }}>
-          <span style={{ color: "#7DBCFF", fontSize: 9 }}>🐘</span>
-          <span>GaneshKrishna.php</span>
-        </div>
-      </div>
-
-      {/* ── Editor area ── */}
-      <div
-        className="terminal-body"
-        style={{ display: "flex", gap: 0, padding: "14px 0", fontSize: "0.75rem", lineHeight: 1.72, overflowX: "hidden" }}
-      >
-        {/* Line numbers — dim until revealed */}
-        <div style={{
-          userSelect: "none", paddingRight: 14, paddingLeft: 12,
-          textAlign: "right", minWidth: 42, flexShrink: 0,
-          fontFamily: "JetBrains Mono, monospace",
-        }}>
-          {codeLines.map((_, i) => (
-            <div
-              key={i}
-              style={{
-                height: "1.72em",
-                color: i < visible ? "#555e6e" : "#242a34",
-                transition: "color 0.18s ease",
-              }}
-            >
-              {i + 1}
-            </div>
-          ))}
-        </div>
-
-        {/* Code — lines appear one by one with slide-in */}
-        <div style={{ flex: 1, paddingRight: 16, fontFamily: "JetBrains Mono, monospace", whiteSpace: "pre", overflowX: "hidden" }}>
-          {codeLines.map((line, i) => (
-            <div
-              key={i}
-              style={{
-                height: "1.72em",
-                display: "flex",
-                alignItems: "center",
-                opacity: i < visible ? 1 : 0,
-                animation: i === visible - 1 ? "typeLine 0.13s ease-out both" : undefined,
-              }}
-            >
-              {i < visible && (
-                <>
-                  {line.length === 0
-                    ? <span>&#8203;</span>
-                    : line.map((tok, j) => <span key={j} className={tok.c ?? ""}>{tok.t}</span>)
-                  }
-                  {/* cursor tracks the active line while typing, stays at last line when done */}
-                  {((typing && i === visible - 1) || (!typing && i === codeLines.length - 1)) && (
-                    <span style={{
-                      display: "inline-block", width: 1.5, height: "0.9em",
-                      background: cursorOn ? "#60A5FA" : "transparent",
-                      marginLeft: 1, verticalAlign: "middle", transition: "background 0.08s",
-                    }} />
-                  )}
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Status bar — Ln updates live while typing ── */}
-      <div style={{
-        height: 22, background: "#0078d4", display: "flex", alignItems: "center",
-        padding: "0 12px", gap: 16, fontFamily: "JetBrains Mono, monospace",
-        fontSize: 10, color: "rgba(255,255,255,0.75)", flexShrink: 0,
-      }}>
-        <span>⎇ main</span>
-        <span style={{ marginLeft: "auto" }}>Ln {Math.min(visible, codeLines.length)}, Col 2</span>
-        <span>UTF-8</span>
-        <span>PHP</span>
-      </div>
-    </div>
-  );
-}
 
 export function Hero() {
   const [roleIndex,   setRoleIndex]   = useState(0);
@@ -304,7 +106,7 @@ export function Hero() {
         style={{ background: "radial-gradient(ellipse 70% 60% at 50% 40%, rgba(37,99,235,0.04) 0%, transparent 70%)" }} />
 
       <div className="container px-4 sm:px-6 md:px-10 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-6 items-center">
 
           {/* ── LEFT: Text + Avatar + Stats ── */}
           <div
@@ -350,7 +152,7 @@ export function Hero() {
                     <Avatar className="h-24 w-24 lg:h-28 lg:w-28 rounded-full">
                       <AvatarImage
                         src="/gk.webp"
-                        alt="K Ganesh Krishna — Backend Developer"
+                        alt="K Ganesh Krishna - Backend Developer"
                         loading="eager"
                         decoding="async"
                       />
@@ -492,7 +294,7 @@ export function Hero() {
             </div>
           </div>
 
-          {/* ── RIGHT: Code quote card + floating badges ── */}
+          {/* ── RIGHT: Bento project cards ── */}
           <div
             className="relative flex justify-center items-center order-1 lg:order-2 animate-fade-in"
             style={{
@@ -501,43 +303,7 @@ export function Hero() {
               transition: "transform 0.05s linear",
             }}
           >
-            {/* Mobile */}
-            <div className="lg:hidden w-full max-w-sm mx-auto">
-              <CodeQuote />
-            </div>
-
-            {/* Desktop: code card with floating tech badges */}
-            <div className="hidden lg:block relative w-full max-w-lg">
-              {/* Floating tech badges */}
-              {techBadges.map((badge, i) => (
-                <div
-                  key={i}
-                  aria-hidden="true"
-                  className={`float-code-tag ${badge.anim} flex items-center gap-1.5`}
-                  style={{
-                    left: badge.x,
-                    top: badge.y,
-                    animationDelay: badge.delay,
-                    zIndex: 10,
-                  }}
-                >
-                  <img src={badge.logo} alt={badge.name} className="w-4 h-4 flex-shrink-0" style={{ objectFit: "contain" }} />
-                  <span style={{ color: badge.color }}>{badge.name}</span>
-                </div>
-              ))}
-
-              {/* Code card */}
-              <CodeQuote />
-
-              {/* "15+ APIs" badge */}
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-4 -right-5 z-20 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg text-xs font-mono-code text-slate-600 dark:text-slate-400 animate-float"
-                style={{ animationDelay: "2s" }}
-              >
-                <span className="text-emerald-500 font-bold">✓</span> 15+ APIs integrated
-              </div>
-            </div>
+            <BentoProjectCards />
           </div>
 
         </div>

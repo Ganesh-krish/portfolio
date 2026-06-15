@@ -1,5 +1,4 @@
-
-import { MapPin, Calendar, ExternalLink, Code2 } from "lucide-react";
+import { MapPin, Calendar, ExternalLink, Code2, Briefcase } from "lucide-react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useElementParallax } from "@/hooks/useParallax";
 
@@ -14,7 +13,7 @@ const experiences = [
     bullets: [
       "Sole backend dev owning 5 production systems — REST APIs, webhooks, business logic, DB schemas built from scratch in CodeIgniter 3 (PHP)",
       "Designed secure RESTful APIs supporting React frontends for complex workflows: GST compliance, scholarship approvals, course management, social media automation",
-      "Integrated 15+ third-party APIs — payments (Zoho Pay, Razorpay, Stripe), comms (ZeptoMail, Zoho SMTP, Zoho SalesIQ), compliance (Taxpro e-Invoice & e-Way Bill), biometric (Etimeoffice), media (Cloudinary), automation (Meta Graph API)",
+      "Integrated 15+ third-party APIs — payments (Zoho Pay, Razorpay, Stripe), comms (ZeptoMail, Zoho SMTP), compliance (Taxpro e-Invoice & e-Way Bill), biometric (Etimeoffice), media (Cloudinary), automation (Meta Graph API)",
       "Implemented Google OAuth, Zoho OAuth, Firebase Phone OTP, and MFA with RBAC across 3 platforms",
       "Optimised MySQL queries and conducted API security testing with Burp Suite",
       "Built file-chunking strategy for large ERP report exports without memory overflow",
@@ -31,11 +30,14 @@ const experiences = [
     location: "Rajapalayam, Tamil Nadu",
     summary: "Weekend role during undergraduate studies — client websites, payment integrations, and live deployment.",
     bullets: [
-      "Built responsive client websites using HTML, CSS, JavaScript, Bootstrap, Core PHP, and MySQL",
-      "Integrated Razorpay and Stripe payment gateways into client projects",
+      "Built 8+ responsive client websites from scratch using HTML, CSS, JavaScript, Bootstrap, Core PHP, and MySQL",
+      "Integrated Razorpay and Stripe payment gateways into e-commerce client projects with webhook-based order confirmation",
+      "Developed a college virtual campus tour platform using panoramic photography (Anjac Panorama)",
+      "Tutored students and junior developers in web development; also conducted training sessions at college campus through an MOU signed between the college and Anjana Infotech",
       "Managed end-to-end deployment — domain setup, DNS, cPanel and OVI panel — with documentation for each release",
+      "Collaborated directly with clients to gather requirements, translate briefs into UI, and deliver on deadlines",
     ],
-    tags: ["PHP", "MySQL", "JavaScript", "Bootstrap", "Razorpay", "Stripe", "cPanel"],
+    tags: ["PHP", "MySQL", "JavaScript", "Bootstrap", "Razorpay", "Stripe", "cPanel", "Git"],
     color: "#7C3AED",
     codeSnippet: "deploy(Project $p)",
     certificate: "https://drive.google.com/file/d/10ZwO9qqKiF8nRlidUXzd0-NXXM4FAib9/view?usp=drivesdk",
@@ -70,60 +72,76 @@ export function Experience() {
             <div className="section-line" />
           </div>
 
-          <div className="timeline-container pl-14 max-w-3xl">
+          {/* 2-column grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
             {experiences.map((exp, i) => (
-              <div key={i} className="relative mb-10 last:mb-0 stagger-item">
-
-                {/* Timeline dot */}
+              <div key={i} className="stagger-item h-full">
                 <div
-                  className="timeline-dot absolute -left-14"
-                  style={{ borderColor: exp.color, boxShadow: `0 0 0 4px ${exp.color}15` }}
+                  className="glass-card p-6 h-full flex flex-col"
+                  style={{ borderTop: `3px solid ${exp.color}` }}
                 >
-                  <Code2 className="h-4 w-4" style={{ color: exp.color }} />
-                </div>
-
-                {/* Card */}
-                <div
-                  className="glass-card p-6"
-                  style={{ borderTop: `2px solid ${exp.color}` }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 font-display">{exp.role}</h3>
-                      <p className="font-semibold text-sm mt-0.5 font-mono-code" style={{ color: exp.color }}>{exp.company}</p>
-                      <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{exp.duration}</span>
-                        <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{exp.location}</span>
+                  {/* Header */}
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="flex items-start gap-3">
+                      {/* Icon */}
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
+                        style={{ background: `${exp.color}15` }}
+                      >
+                        {i === 0
+                          ? <Code2 className="h-5 w-5" style={{ color: exp.color }} />
+                          : <Briefcase className="h-5 w-5" style={{ color: exp.color }} />
+                        }
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 font-display leading-tight">
+                          {exp.role}
+                        </h3>
+                        <p className="font-semibold text-sm mt-0.5 font-mono-code" style={{ color: exp.color }}>
+                          {exp.company}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex flex-col items-start sm:items-end gap-1.5">
-                      <span
-                        className="text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
-                        style={{ background: `${exp.color}10`, color: exp.color, border: `1px solid ${exp.color}25` }}
-                      >
-                        {exp.type}
-                      </span>
-                      {/* Code snippet label */}
-                      <span className="font-mono-code text-[10px] text-slate-400 dark:text-slate-500">
-                        fn {exp.codeSnippet}
-                      </span>
-                    </div>
+                    {/* Type badge */}
+                    <span
+                      className="text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap flex-shrink-0"
+                      style={{ background: `${exp.color}10`, color: exp.color, border: `1px solid ${exp.color}25` }}
+                    >
+                      {exp.type}
+                    </span>
                   </div>
 
-                  <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4 border-l-2 pl-3" style={{ borderLeftColor: `${exp.color}50` }}>
+                  {/* Meta */}
+                  <div className="flex flex-wrap gap-3 mb-4 text-xs text-slate-500 dark:text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />{exp.duration}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />{exp.location}
+                    </span>
+                  </div>
+
+                  {/* Summary */}
+                  <p className="text-xs text-slate-500 dark:text-slate-400 italic mb-4 border-l-2 pl-3 leading-relaxed"
+                    style={{ borderLeftColor: `${exp.color}50` }}>
                     {exp.summary}
                   </p>
 
-                  <ul className="space-y-2 mb-4">
+                  {/* Bullets */}
+                  <ul className="space-y-2.5 mb-5 flex-1">
                     {exp.bullets.map((b, j) => (
                       <li key={j} className="flex gap-2.5 text-sm text-slate-600 dark:text-slate-400">
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: exp.color }} />
+                        <span
+                          className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0"
+                          style={{ background: exp.color }}
+                        />
                         {b}
                       </li>
                     ))}
                   </ul>
 
-                  <div className="flex flex-wrap gap-1.5">
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
                     {exp.tags.map((tag, j) => (
                       <span
                         key={j}
@@ -135,12 +153,13 @@ export function Experience() {
                     ))}
                   </div>
 
+                  {/* Certificate link */}
                   {exp.certificate && (
                     <a
                       href={exp.certificate}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-4 text-xs font-semibold hover:underline"
+                      className="inline-flex items-center gap-1 text-xs font-semibold hover:underline mt-auto"
                       style={{ color: exp.color }}
                     >
                       <ExternalLink className="h-3 w-3" /> View Certificate

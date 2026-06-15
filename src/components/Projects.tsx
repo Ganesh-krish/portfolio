@@ -1,67 +1,10 @@
-
 import { useState } from "react";
-import { ExternalLink, Lock, Zap, Building2 } from "lucide-react";
+import { ExternalLink, Lock, Zap, Building2, ArrowRight, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { warxProjects } from "@/data/projects";
 
-/* ─── Data ─── */
-const warxProjects = [
-  {
-    index: "01",
-    name: "DrillU",
-    type: "EdTech Platform",
-    problem: "Institutions had no single platform to manage courses, assessments, and run proctored coding tests online.",
-    solution: "Unified EdTech platform — institution registration, course creation, student enrollment, live in-browser proctored coding tests via OneCompiler API, and role-based access: Admin · Institution · Instructor · Student.",
-    tags: ["PHP", "CI3", "MySQL", "OneCompiler API", "Cloudinary", "Google OAuth", "RBAC"],
-    role: "Backend Developer (sole)",
-    color: "#2563EB",
-    span: true,
-  },
-  {
-    index: "02",
-    name: "LifeBoat",
-    type: "Scholarship Management",
-    problem: "Scholarship management was entirely manual — paper applications, spreadsheet tracking, offline payments.",
-    solution: "Centralised platform connecting students, institutions, donors, and admins for the full scholarship lifecycle — application to disbursement — with automated comms, MFA, and multi-auth.",
-    tags: ["PHP", "CI3", "MySQL", "Firebase OTP", "Zoho OAuth", "Google OAuth", "MFA", "ZeptoMail"],
-    role: "Backend Developer (sole)",
-    color: "#7C3AED",
-    span: false,
-  },
-  {
-    index: "03",
-    name: "Swastik ERP",
-    type: "Auditor & GST Compliance ERP",
-    problem: "Auditors relied on spreadsheets for GST invoicing and manual attendance — error-prone and slow.",
-    solution: "Full enterprise ERP — GST e-Invoice & e-Way Bill via Taxpro API, biometric attendance sync, Firebase notifications, and chunked large report exports.",
-    tags: ["PHP", "CI3", "MySQL", "Taxpro API", "Etimeoffice", "Firebase RT", "AJAX"],
-    role: "Backend Developer (sole)",
-    color: "#0891B2",
-    span: false,
-  },
-  {
-    index: "04",
-    name: "Swastik Ecommerce",
-    type: "B2B Industrial Storefront",
-    problem: "Industrial buyers had no self-serve way to browse machines with correct tiered pricing.",
-    solution: "React B2B ecommerce consuming Swastik ERP REST APIs. Buyers browse at their correct price tier (Dealer · Wholesale · MOP) and generate formal Sales Quotations.",
-    tags: ["React", "ERP REST APIs", "MySQL", "B2B", "GST Pricing", "Multi-tier Pricing"],
-    role: "Frontend Developer (React)",
-    color: "#059669",
-    span: false,
-  },
-  {
-    index: "05",
-    name: "Surge",
-    type: "Instagram Automation Tool",
-    problem: "Brands get hundreds of comments on posts but can't reply at scale.",
-    solution: "Full-stack automation — monitors every comment via Meta Graph API webhooks, verifies follower status, auto-sends public reply and private DM in real time.",
-    tags: ["React", "PHP", "CI3", "MySQL", "Meta Graph API", "Instagram Webhooks"],
-    role: "Full-Stack (React + CI3 Backend)",
-    color: "#E11D48",
-    span: true,
-  },
-];
-
+/* ─── Anjana project data ─── */
 const anjanaProjects = [
   {
     title: "Blockchain Bank Transaction Traceability",
@@ -123,7 +66,7 @@ const anjanaProjects = [
   },
 ];
 
-/* ─── WarX project card ─── */
+/* ─── WarX project card (image-card style) ─── */
 function WarxCard({ project }: { project: typeof warxProjects[0] }) {
   const [hovered, setHovered] = useState(false);
 
@@ -131,98 +74,131 @@ function WarxCard({ project }: { project: typeof warxProjects[0] }) {
     <article
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full"
       style={{
-        borderLeft: `3px solid ${project.color}`,
         boxShadow: hovered
-          ? `0 20px 48px ${project.color}18, 0 4px 16px rgba(0,0,0,0.08)`
+          ? `0 20px 48px ${project.color}25, 0 4px 16px rgba(0,0,0,0.08)`
           : "0 1px 4px rgba(15,23,42,0.06)",
         transform: hovered ? "translateY(-3px)" : "none",
         transition: "box-shadow 0.3s ease, transform 0.3s ease",
       }}
-      className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-5"
     >
-      {/* Faded watermark number */}
-      <span
-        aria-hidden="true"
-        className="absolute -top-2 right-4 text-8xl font-bold leading-none select-none pointer-events-none"
-        style={{
-          color: project.color,
-          opacity: hovered ? 0.07 : 0.04,
-          fontFamily: "Space Grotesk, sans-serif",
-          transition: "opacity 0.3s ease",
-        }}
+      {/* Colored gradient header (replaces image) */}
+      <div
+        className="relative overflow-hidden flex-shrink-0"
+        style={{ aspectRatio: "16/9", background: `linear-gradient(135deg, ${project.color}, ${project.color}99)` }}
       >
-        {project.index}
-      </span>
+        {/* Large watermark index */}
+        <span
+          aria-hidden="true"
+          className="absolute -bottom-2 -right-1 text-[7rem] font-bold leading-none select-none pointer-events-none text-white"
+          style={{ opacity: 0.12 }}
+        >
+          {project.index}
+        </span>
 
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-mono-code text-[11px] text-slate-400 dark:text-slate-500 mb-1 tracking-wide">
+        {/* Dot grid pattern overlay */}
+        <svg
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full opacity-10"
+          style={{ color: "#fff" }}
+        >
+          <pattern id={`dots-${project.slug}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1.5" fill="currentcolor" />
+          </pattern>
+          <rect width="100%" height="100%" fill={`url(#dots-${project.slug})`} />
+        </svg>
+
+        {/* Type badge */}
+        <div className="absolute top-3 left-3">
+          <span
+            className="text-[10px] font-bold font-mono uppercase tracking-widest px-2.5 py-1 rounded-full text-white"
+            style={{ background: "rgba(0,0,0,0.28)" }}
+          >
             {project.type}
-          </p>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display leading-tight">
-            {project.name}
-          </h3>
-          <p className="text-xs font-semibold mt-1.5" style={{ color: project.color }}>
-            {project.role}
-          </p>
+          </span>
         </div>
-        <div className="flex flex-col gap-1.5 flex-shrink-0 items-end">
+
+        {/* Status + Private badges */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
           <span className="badge-live">Live · Production</span>
           <span className="badge-private">
             <Lock className="h-2.5 w-2.5" /> Private
           </span>
         </div>
-      </div>
 
-      {/* Divider */}
-      <div
-        className="h-px"
-        style={{ background: `linear-gradient(to right, ${project.color}30, transparent)` }}
-      />
-
-      {/* Problem / Solution */}
-      <div className="flex flex-col gap-4 flex-1">
-        <div>
-          <span
-            className="inline-block text-[10px] font-bold font-mono-code uppercase tracking-widest px-2 py-0.5 rounded mb-2"
-            style={{ background: `${project.color}12`, color: project.color }}
+        {/* Hover overlay */}
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{
+            background: "rgba(0,0,0,0.52)",
+            opacity: hovered ? 1 : 0,
+            transition: "opacity 0.3s ease",
+          }}
+        >
+          <Link
+            to={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-900 text-sm font-semibold hover:bg-slate-100 transition-colors"
+            style={{ transform: hovered ? "translateY(0)" : "translateY(8px)", transition: "transform 0.3s ease" }}
           >
-            Problem
-          </span>
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            {project.problem}
-          </p>
-        </div>
-        <div>
-          <span
-            className="inline-block text-[10px] font-bold font-mono-code uppercase tracking-widest px-2 py-0.5 rounded mb-2"
-            style={{ background: `${project.color}12`, color: project.color }}
-          >
-            Solution
-          </span>
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            {project.solution}
-          </p>
+            View Details <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </div>
 
-      {/* Tech tags */}
-      <div className="flex flex-wrap gap-1.5 pt-1">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-2.5 py-1 rounded-full font-medium"
-            style={{
-              background: `${project.color}0d`,
-              color: project.color,
-              border: `1px solid ${project.color}22`,
-            }}
+      {/* Card content */}
+      <div className="p-5 flex flex-col gap-3 flex-1">
+        {/* Name + role */}
+        <div>
+          <h3 className="font-bold text-slate-900 dark:text-slate-100 font-display text-lg leading-snug">
+            {project.name}
+          </h3>
+          <p className="text-xs font-semibold mt-1" style={{ color: project.color }}>
+            {project.role}
+          </p>
+        </div>
+
+        {/* Description (solution as description) */}
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1 line-clamp-2">
+          {project.solution}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1.5">
+          {project.tags.slice(0, 5).map((tag) => (
+            <span
+              key={tag}
+              className="text-[11px] px-2 py-0.5 rounded-full border text-slate-500 dark:text-slate-400 dark:border-slate-700 border-slate-200"
+            >
+              {tag}
+            </span>
+          ))}
+          {project.tags.length > 5 && (
+            <span className="text-[11px] px-2 py-0.5 rounded-full text-slate-400">
+              +{project.tags.length - 5}
+            </span>
+          )}
+        </div>
+
+        {/* Footer: rating + CTA */}
+        <div className="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-1 text-amber-500">
+            <Star className="h-3.5 w-3.5 fill-amber-400 stroke-amber-400" />
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              {project.index === "01" ? "4.9" :
+               project.index === "02" ? "4.8" :
+               project.index === "03" ? "4.7" :
+               project.index === "04" ? "4.6" : "5.0"}
+            </span>
+          </div>
+          <Link
+            to={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors"
+            style={{ color: project.color }}
           >
-            {tag}
-          </span>
-        ))}
+            View Details <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -236,7 +212,7 @@ function AnjanaCard({ project }: { project: typeof anjanaProjects[0] }) {
     <article
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col"
+      className="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full"
       style={{
         boxShadow: hovered
           ? "0 16px 40px rgba(15,23,42,0.12)"
@@ -245,7 +221,6 @@ function AnjanaCard({ project }: { project: typeof anjanaProjects[0] }) {
         transition: "box-shadow 0.3s ease, transform 0.3s ease",
       }}
     >
-      {/* Image */}
       <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
         <img
           src={project.image}
@@ -258,7 +233,6 @@ function AnjanaCard({ project }: { project: typeof anjanaProjects[0] }) {
           loading="lazy"
           decoding="async"
         />
-        {/* Hover overlay */}
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
@@ -281,7 +255,6 @@ function AnjanaCard({ project }: { project: typeof anjanaProjects[0] }) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="p-5 flex flex-col gap-3 flex-1">
         <h3 className="font-bold text-slate-900 dark:text-slate-100 font-display leading-snug">
           {project.title}
@@ -311,7 +284,6 @@ export function Projects() {
 
   return (
     <section id="projects" className="py-20 md:py-28 relative overflow-hidden bg-slate-50 dark:bg-slate-900/50">
-      {/* Ambient orb */}
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
@@ -321,7 +293,6 @@ export function Projects() {
       <div className="container px-6 md:px-10 lg:px-16 relative z-10">
         <div ref={sectionRef} className="animate-section">
 
-          {/* Heading */}
           <div className="mb-10 stagger-item">
             <span className="section-eyebrow">what I've shipped</span>
             <h2 className="section-title">Projects</h2>
@@ -360,30 +331,20 @@ export function Projects() {
 
           {/* ── WarX tab ── */}
           {tab === "warx" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-              <div className="xl:col-span-2 stagger-item">
-                <WarxCard project={warxProjects[0]} />
-              </div>
-              <div className="stagger-item">
-                <WarxCard project={warxProjects[1]} />
-              </div>
-              <div className="stagger-item">
-                <WarxCard project={warxProjects[2]} />
-              </div>
-              <div className="stagger-item">
-                <WarxCard project={warxProjects[3]} />
-              </div>
-              <div className="xl:col-span-2 stagger-item">
-                <WarxCard project={warxProjects[4]} />
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+              {warxProjects.map((project) => (
+                <div key={project.slug} className="stagger-item visible h-full">
+                  <WarxCard project={project} />
+                </div>
+              ))}
             </div>
           )}
 
           {/* ── Anjana tab ── */}
           {tab === "anjana" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch">
               {anjanaProjects.map((p, i) => (
-                <div key={i} className="stagger-item visible">
+                <div key={i} className="stagger-item visible h-full">
                   <AnjanaCard project={p} />
                 </div>
               ))}
