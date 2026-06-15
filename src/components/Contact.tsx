@@ -34,7 +34,7 @@ export function Contact() {
     <section
       id="contact"
       className="py-20 md:py-28 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #040d1a 0%, #0b0929 55%, #04121f 100%)" }}
+      style={{ background: "linear-gradient(135deg, #040d1a 0%, #0b0929 55%, #04121f 100%)", "--section-accent": "hsl(4,56%,48%)", "--section-accent-end": "hsl(4,56%,65%)" } as { [key: string]: string }}
     >
       {/* Grid pattern */}
       <div

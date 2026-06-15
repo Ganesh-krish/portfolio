@@ -154,13 +154,11 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
     font-weight: 500;
-    color: #2563EB;
+    color: var(--section-accent, #2563EB);
     display: block;
     margin-bottom: 0.5rem;
   }
   .section-eyebrow::before { content: '// '; opacity: 0.6; }
-
-  .dark .section-eyebrow { color: #60A5FA; }
 
   .section-title {
     font-family: 'Space Grotesk', sans-serif;
@@ -169,7 +167,7 @@
     letter-spacing: -0.03em;
     line-height: 1.1;
     display: inline-block;
-    background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    background: linear-gradient(135deg, var(--section-accent, #2563EB) 0%, var(--section-accent-end, #7C3AED) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -179,7 +177,7 @@
     width: 40px;
     height: 3px;
     border-radius: 99px;
-    background: linear-gradient(90deg, #2563EB, #7C3AED);
+    background: linear-gradient(90deg, var(--section-accent, #2563EB), var(--section-accent-end, #7C3AED));
     margin-top: 10px;
   }
 

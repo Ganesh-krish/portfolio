@@ -28,7 +28,7 @@ export function Education() {
     <section
       id="education"
       className="py-20 md:py-28 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #eff6ff 0%, #f8fafc 45%, #f5f3ff 100%)" }}
+      style={{ background: "linear-gradient(135deg, #eff6ff 0%, #f8fafc 45%, #f5f3ff 100%)", "--section-accent": "hsl(262,44%,53%)", "--section-accent-end": "hsl(262,44%,70%)" } as { [key: string]: string }}
     >
       {/* Dot grid pattern */}
       <div

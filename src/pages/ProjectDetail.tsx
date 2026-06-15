@@ -15,6 +15,36 @@ import {
 } from "lucide-react";
 import { warxProjects } from "@/data/projects";
 
+/* Simple Icons CDN slug for each tech — https://cdn.simpleicons.org/{slug} */
+const TECH_ICON_SLUG: Record<string, string> = {
+  "PHP":                    "php",
+  "CI3":                    "codeigniter",
+  "CodeIgniter 3":          "codeigniter",
+  "MySQL":                  "mysql",
+  "MySQL (via ERP API)":    "mysql",
+  "MySQL (via API)":        "mysql",
+  "Firebase":               "firebase",
+  "Firebase OTP":           "firebase",
+  "Firebase RT":            "firebase",
+  "Firebase Real-time DB":  "firebase",
+  "Google OAuth":           "google",
+  "Zoho OAuth":             "zoho",
+  "Meta Graph API":         "meta",
+  "Instagram Webhooks":     "instagram",
+  "React":                  "react",
+  "TypeScript":             "typescript",
+  "JavaScript":             "javascript",
+  "Bootstrap":              "bootstrap",
+  "jQuery":                 "jquery",
+  "Postman":                "postman",
+  "Burp Suite":             "burpsuite",
+  "Git":                    "git",
+  "Razorpay":               "razorpay",
+  "Stripe":                 "stripe",
+  "Cloudinary":             "cloudinary",
+  "cPanel":                 "cpanel",
+};
+
 const TECH_COLORS: Record<string, string> = {
   "PHP": "#777BB4",
   "CI3": "#EF4223",
@@ -304,19 +334,26 @@ export default function ProjectDetail() {
                     {group.label}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="text-sm px-3 py-1.5 rounded-full font-medium"
-                        style={{
-                          background: `${c}12`,
-                          color: c,
-                          border: `1px solid ${c}30`,
-                        }}
-                      >
-                        {item}
-                      </span>
-                    ))}
+                    {group.items.map((item) => {
+                      const slug = TECH_ICON_SLUG[item];
+                      return (
+                        <span
+                          key={item}
+                          className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full font-medium"
+                          style={{ background: `${c}12`, color: c, border: `1px solid ${c}30` }}
+                        >
+                          {slug && (
+                            <img
+                              src={`https://cdn.simpleicons.org/${slug}`}
+                              alt=""
+                              className="w-3.5 h-3.5 object-contain flex-shrink-0"
+                              loading="lazy"
+                            />
+                          )}
+                          {item}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -369,6 +406,7 @@ export default function ProjectDetail() {
               <div className="grid grid-cols-2 gap-2">
                 {project.tags.map((tag) => {
                   const brandColor = TECH_COLORS[tag] ?? c;
+                  const slug = TECH_ICON_SLUG[tag];
                   const initials = tag.replace(/[^A-Z0-9]/gi, " ").split(" ").filter(Boolean).map(w => w[0].toUpperCase()).join("").slice(0, 2);
                   return (
                     <div
@@ -376,11 +414,19 @@ export default function ProjectDetail() {
                       className="flex items-center gap-2 px-2 py-2 border"
                       style={{ borderColor: `${brandColor}30`, background: `${brandColor}0e` }}
                     >
-                      <span
-                        className="w-6 h-6 flex items-center justify-center text-[9px] font-bold flex-shrink-0 text-white"
-                        style={{ background: brandColor }}
-                      >
-                        {initials}
+                      <span className="w-6 h-6 flex items-center justify-center flex-shrink-0 rounded-sm bg-white dark:bg-slate-800">
+                        {slug ? (
+                          <img
+                            src={`https://cdn.simpleicons.org/${slug}`}
+                            alt={tag}
+                            className="w-4 h-4 object-contain"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span className="text-[9px] font-bold" style={{ color: brandColor }}>
+                            {initials}
+                          </span>
+                        )}
                       </span>
                       <span className="text-[10px] font-semibold leading-tight text-slate-700 dark:text-slate-200 truncate">
                         {tag}

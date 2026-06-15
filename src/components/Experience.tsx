@@ -49,7 +49,7 @@ export function Experience() {
   const { ref: orbRef, offset: orbOffset } = useElementParallax<HTMLDivElement>(0.15);
 
   return (
-    <section id="experience" className="py-20 md:py-28 relative overflow-hidden bg-white dark:bg-slate-950">
+    <section id="experience" className="py-20 md:py-28 relative overflow-hidden bg-white dark:bg-slate-950" style={{ "--section-accent": "hsl(225,58%,53%)", "--section-accent-end": "hsl(225,58%,70%)" } as { [key: string]: string }}>
       <div
         ref={orbRef}
         aria-hidden="true"

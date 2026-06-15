@@ -63,7 +63,7 @@ export function Certificates() {
     <section
       id="certificates"
       className="py-20 md:py-28 relative overflow-hidden"
-      style={{ background: "hsl(var(--muted) / 0.3)" }}
+      style={{ background: "hsl(var(--muted) / 0.3)", "--section-accent": "hsl(320,60%,58%)", "--section-accent-end": "hsl(320,60%,75%)" } as { [key: string]: string }}
     >
       <div ref={sectionRef} className="animate-section">
 
