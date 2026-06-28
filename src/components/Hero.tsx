@@ -34,7 +34,7 @@ function PhraseCard({ top, bot, color, Icon, spin }: {
   const [hovered, setHovered] = useState(false);
   return (
     <div
-      className="flex flex-col gap-2.5 p-4 rounded-2xl border cursor-default"
+      className="flex flex-col gap-2.5 p-4 rounded-2xl border cursor-default h-full"
       style={{
         borderColor: hovered ? `${color}50` : `${color}28`,
         background: `${color}09`,
@@ -213,7 +213,7 @@ export function Hero() {
               {phrases.map((p, i) => (
                 <div
                   key={p.top}
-                  className="animate-fade-in"
+                  className="animate-fade-in h-full"
                   style={{ animationDelay: `${440 + i * 90}ms` }}
                 >
                   <PhraseCard {...p} />

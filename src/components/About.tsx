@@ -134,8 +134,7 @@ export function About() {
               <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                 In my first year at{" "}
                 <span className="font-semibold text-slate-900 dark:text-slate-200">WarX Digital</span>, I built and
-                shipped 5 production systems used by real clients. I use AI tools (Claude Code, Cursor) for frontend —
-                my focus is always the backend and integrations layer.
+                shipped 5 production systems used by real clients. I use AI-assisted workflows (Claude Code, Cursor) for frontend — so I can stay focused where I'm strongest: backend and integrations.
               </p>
             </div>
           </div>
