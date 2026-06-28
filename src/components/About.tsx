@@ -24,9 +24,9 @@ const highlights = [
 ];
 
 const stats = [
-  { value: "5",   label: "Products Shipped",    color: "#2563EB" },
-  { value: "15+", label: "API Integrations",     color: "#7C3AED" },
-  { value: "1yr", label: "Full-time Production", color: "#059669" },
+  { value: "5",   label: "Live Products",        color: "#2563EB" },
+  { value: "15+", label: "Integrations Built",   color: "#7C3AED" },
+  { value: "1yr", label: "Backend Experience",   color: "#059669" },
 ];
 
 export function About() {

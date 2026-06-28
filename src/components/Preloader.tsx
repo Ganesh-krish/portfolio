@@ -5,7 +5,7 @@ const lines = [
   { prompt: true,  text: "git clone github.com/Ganesh-krish/portfolio",    color: "#f1f5f9" },
   { prompt: false, text: "↳ cloning 5 projects · 15+ integrations",        color: "#4b5563" },
   { prompt: false, text: "import { Backend } from './warx-digital'",        color: "#93c5fd" },
-  { prompt: false, text: "const stack = ['PHP', 'CI3', 'MySQL', 'Firebase']", color: "#c4b5fd" },
+  { prompt: false, text: "backend · php · mysql · firebase",                  color: "#c4b5fd" },
   { prompt: false, text: "compiled 1 yr of production experience",           color: "#4b5563" },
   { prompt: false, text: "✓  portfolio ready · launching now...",            color: "#4ade80" },
 ];
@@ -148,7 +148,7 @@ export function Preloader() {
           {/* Progress */}
           <div className="px-5 py-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-[10px]" style={{ color: "#374151" }}>initializing</span>
+              <span className="font-mono text-[10px]" style={{ color: "#374151" }}>loading portfolio</span>
               <span className="font-mono text-[10px] font-semibold" style={{ color: "#818cf8" }}>
                 {progress}%
               </span>

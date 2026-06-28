@@ -22,8 +22,6 @@ export function Footer() {
           <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500">
             <span className="font-mono-code">Backend Developer</span>
             <span>·</span>
-            <span>Erode, Tamil Nadu</span>
-            <span>·</span>
             <span>© {year}</span>
           </div>
 
