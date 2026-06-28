@@ -202,4 +202,41 @@ export const warxProjects: WarxProject[] = [
       { label: "APIs", items: ["Meta Graph API", "Instagram Webhooks"] },
     ],
   },
+  {
+    slug: "uploads-cdn",
+    index: "06",
+    name: "Uploads & CDN",
+    type: "Internal Media Infrastructure",
+    year: "2024",
+    role: "Backend Developer (Sole)",
+    color: "#D97706",
+    problem:
+      "Internal projects had no centralised way to manage media uploads — images were scattered, unoptimised, and served directly from application servers with no caching or access control.",
+    solution:
+      "Two-project media infrastructure: a role-based upload portal (uploads.warx.in) with image preview, public/private visibility, and shareable CDN links — served via a dedicated CDN project (cdn.warx.in) built in CI3 with on-the-fly thumbnail generation and response caching.",
+    overview:
+      "Uploads & CDN is an internal media infrastructure built for WarX Digital. The upload portal handles image management across roles (Admin, User, Employee) with Google OAuth login, role switching, and active/inactive status control. Images are stored inside the application and served exclusively through a separate CDN project — a lean CI3 app with a single Serve controller that handles cache headers, on-the-fly thumbnail creation, and public/private access rules.",
+    features: [
+      "Role-based access: Admin, User, Employee with Google OAuth login and role switching",
+      "Active / inactive account status management controlled by Admin",
+      "Image upload with instant in-browser preview before saving",
+      "Public and private image visibility toggle per upload",
+      "One-click CDN link copy — all images served via cdn.warx.in",
+      "Dedicated CDN project: single Serve controller handles all media delivery",
+      "On-the-fly thumbnail generation and response caching at the CDN layer",
+      "Cache headers optimised for performance — images served fast without hitting the upload server",
+    ],
+    impact: [
+      "Centralised all internal media uploads across WarX Digital projects in one system",
+      "Separated upload logic from delivery — CDN layer handles all traffic independently",
+      "Enabled private/public access control per image without exposing storage paths",
+    ],
+    tags: ["PHP", "CI3", "MySQL", "Google OAuth", "CDN", "RBAC", "Thumbnail Generation"],
+    techGroups: [
+      { label: "Backend", items: ["PHP", "CodeIgniter 3"] },
+      { label: "Database", items: ["MySQL"] },
+      { label: "Auth", items: ["Google OAuth", "RBAC"] },
+      { label: "CDN", items: ["Custom Serve Controller", "Thumbnail Generation", "Cache Headers"] },
+    ],
+  },
 ];
