@@ -300,10 +300,10 @@ export function Projects() {
           </div>
 
           {/* Tab switcher */}
-          <div className="flex gap-2 mb-10 stagger-item p-1 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-fit shadow-sm">
+          <div className="flex gap-2 mb-10 stagger-item p-1 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full sm:w-fit shadow-sm">
             <button
               onClick={() => setTab("warx")}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold font-mono-code transition-all duration-200"
+              className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold font-mono-code transition-all duration-200"
               style={
                 tab === "warx"
                   ? { background: "linear-gradient(135deg, #2563EB, #1d4ed8)", color: "#fff", boxShadow: "0 2px 8px rgba(37,99,235,0.35)" }
@@ -311,12 +311,13 @@ export function Projects() {
               }
               aria-pressed={tab === "warx"}
             >
-              <Zap className="h-3.5 w-3.5" />
-              Production @ WarX Digital
+              <Zap className="h-3.5 w-3.5 flex-shrink-0" />
+              <span className="sm:hidden">WarX Digital</span>
+              <span className="hidden sm:inline">Production @ WarX Digital</span>
             </button>
             <button
               onClick={() => setTab("anjana")}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold font-mono-code transition-all duration-200"
+              className="flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold font-mono-code transition-all duration-200"
               style={
                 tab === "anjana"
                   ? { background: "linear-gradient(135deg, #7C3AED, #6d28d9)", color: "#fff", boxShadow: "0 2px 8px rgba(124,58,237,0.35)" }
@@ -324,8 +325,9 @@ export function Projects() {
               }
               aria-pressed={tab === "anjana"}
             >
-              <Building2 className="h-3.5 w-3.5" />
-              Client Work @ Anjana Infotech
+              <Building2 className="h-3.5 w-3.5 flex-shrink-0" />
+              <span className="sm:hidden">Anjana Infotech</span>
+              <span className="hidden sm:inline">Client Work @ Anjana Infotech</span>
             </button>
           </div>
 

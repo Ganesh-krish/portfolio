@@ -110,7 +110,7 @@ export function Hero() {
 
           {/* ── LEFT: Text + Avatar + Stats ── */}
           <div
-            className="flex flex-col gap-5 md:gap-6 order-2 lg:order-1 text-center lg:text-left items-center lg:items-start"
+            className="flex flex-col gap-5 md:gap-6 order-1 text-center lg:text-left items-center lg:items-start"
             style={{ transform: `translateY(${scrollY * 0.04}px)`, transition: "transform 0.05s linear" }}
           >
 
@@ -296,7 +296,7 @@ export function Hero() {
 
           {/* ── RIGHT: Bento project cards ── */}
           <div
-            className="relative flex justify-center items-center order-1 lg:order-2 animate-fade-in"
+            className="relative flex justify-center items-center order-2 animate-fade-in"
             style={{
               animationDelay: "200ms",
               transform: `translateY(${-scrollY * 0.08}px)`,

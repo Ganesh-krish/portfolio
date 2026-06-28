@@ -1,17 +1,17 @@
 
-import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { Download, Menu, X } from "lucide-react";
+import { Download, Menu, X, User, Briefcase, FolderKanban, Code2, GraduationCap, BadgeCheck, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
+import type { LucideIcon } from "lucide-react";
 
-const navItems = [
-  { href: "#about",        label: "About" },
-  { href: "#experience",   label: "Experience" },
-  { href: "#projects",     label: "Projects" },
-  { href: "#skills",       label: "Skills" },
-  { href: "#education",    label: "Education" },
-  { href: "#certificates", label: "Certificates" },
-  { href: "#contact",      label: "Contact" },
+const navItems: { href: string; label: string; Icon: LucideIcon }[] = [
+  { href: "#about",        label: "About",        Icon: User          },
+  { href: "#experience",   label: "Experience",   Icon: Briefcase     },
+  { href: "#projects",     label: "Projects",     Icon: FolderKanban  },
+  { href: "#skills",       label: "Skills",       Icon: Code2         },
+  { href: "#education",    label: "Education",    Icon: GraduationCap },
+  { href: "#certificates", label: "Certificates", Icon: BadgeCheck    },
+  { href: "#contact",      label: "Contact",      Icon: Mail          },
 ];
 
 export function Header() {
@@ -55,14 +55,15 @@ export function Header() {
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          {navItems.map((item) => (
+        <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
+          {navItems.map(({ href, label, Icon }) => (
             <a
-              key={item.label}
-              href={item.href}
-              className="relative px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+              key={label}
+              href={href}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
             >
-              {item.label}
+              <Icon size={13} className="flex-shrink-0 opacity-70" />
+              {label}
             </a>
           ))}
         </nav>
@@ -78,12 +79,10 @@ export function Header() {
           >
             <Download size={12} /> Resume
           </Button>
-          <ThemeToggle />
         </div>
 
-        {/* Mobile */}
+        {/* Mobile hamburger */}
         <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
@@ -101,14 +100,15 @@ export function Header() {
       {open && (
         <div className="md:hidden absolute top-16 inset-x-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-4 py-4 animate-fade-in">
           <nav className="flex flex-col gap-1">
-            {navItems.map((item) => (
+            {navItems.map(({ href, label, Icon }) => (
               <a
-                key={item.label}
-                href={item.href}
+                key={label}
+                href={href}
                 onClick={close}
-                className="px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                className="flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
               >
-                {item.label}
+                <Icon size={14} className="flex-shrink-0 opacity-60" />
+                {label}
               </a>
             ))}
             <Button

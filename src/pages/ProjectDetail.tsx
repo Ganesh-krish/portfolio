@@ -279,6 +279,30 @@ export default function ProjectDetail() {
             </div>
           </div>
 
+          {/* ── Mobile section nav (lg sidebar hidden) ── */}
+          <div className="lg:hidden -mx-3 md:-mx-6 px-3 md:px-6 mb-8 overflow-x-auto">
+            <div className="flex gap-2 min-w-max border-b border-slate-200 dark:border-slate-800 pb-1">
+              {NAV_SECTIONS.map(({ id, label, Icon }) => {
+                const isActive = active === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => scrollTo(id)}
+                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium whitespace-nowrap transition-all border-b-2 -mb-[1px]"
+                    style={
+                      isActive
+                        ? { color: c, borderBottomColor: c }
+                        : { color: "#94a3b8", borderBottomColor: "transparent" }
+                    }
+                  >
+                    <Icon className="h-3 w-3 flex-shrink-0" />
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* ── Section: Overview ── */}
           <section id="overview" className="mb-12 scroll-mt-24">
             <SectionHeading icon={<Layers />} label="Overview" color={c} />
