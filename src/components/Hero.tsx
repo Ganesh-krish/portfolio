@@ -239,7 +239,7 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 className="gap-2 font-semibold h-11 px-6 border-slate-200 dark:border-slate-700 hover:border-blue-400 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors w-full sm:w-auto"
-                onClick={() => window.open("https://drive.google.com/file/d/137AkA3UMimqLFz0HuTo-LtRytha5-N6u/view?usp=drivesdk", "_blank")}
+                onClick={() => window.open("https://drive.google.com/file/d/1_JwCnj34P1hvTPNAVUN66bCeLdTT-icS/view?usp=drivesdk", "_blank")}
                 aria-label="Download resume (opens in new tab)"
               >
                 <Download size={16} /> Resume
