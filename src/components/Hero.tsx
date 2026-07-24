@@ -239,9 +239,9 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 className="gap-2 font-semibold h-11 px-6 border-slate-200 dark:border-slate-700 hover:border-blue-400 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors w-full sm:w-auto"
-                onClick={() => window.open("https://drive.google.com/file/d/13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi/view?usp=drivesdk", "_blank")}
+                onClick={() => window.open("https://drive.google.com/uc?export=download&id=13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi", "_blank")}
                 aria-label="Download resume (opens in new tab)"
-              >  
+              >  13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi
                 <Download size={16} /> Resume
               </Button>
             </div>
