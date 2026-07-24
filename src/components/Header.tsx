@@ -72,7 +72,7 @@ export function Header() {
         <div className="hidden md:flex items-center gap-2">
           <Button
             size="sm"
-            onClick={() => window.open("https://drive.google.com/file/d/13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi/view?usp=sharing", "_blank")}
+            onClick={() => window.open("https://drive.google.com/uc?export=download&id=13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi", "_blank")}
             className="gap-2 text-xs font-semibold h-8 px-3"
             style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", color: "#fff", border: "none" }}
             aria-label="Download resume (opens in new tab)"
@@ -113,7 +113,7 @@ export function Header() {
             ))}
             <Button
               className="mt-3 w-full gap-2"
-              onClick={() => { window.open("https://drive.google.com/file/d/13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi/view?usp=sharing", "_blank"); close(); }}
+              onClick={() => { window.open("https://drive.google.com/uc?export=download&id=13hWgANt_PNIXqpSIZiuO0kZRpnSb61Bi", "_blank"); close(); }}
               style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", color: "#fff", border: "none" }}
             >
               <Download size={14} /> Download Resume
